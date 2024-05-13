@@ -6,6 +6,11 @@ class Player {
       x: 100,
       y: 100,
     };
+    this.velocity = {
+      x: 0,
+      y: 0,
+    };
+    this.gravity = 1;
     this.width = 100;
     this.height = 100;
     this.sides = {
@@ -21,9 +26,15 @@ class Player {
 
   update() {
     const canvas = this.canvas;
-    if (this.sides.bottom < canvas.height) {
-      this.position.y++;
+
+    this.position.y += this.velocity.y;
+
+    if (this.sides.bottom + this.velocity.y < canvas.height) {
+      this.velocity.y += this.gravity;
       this.sides.bottom = this.position.y + this.height;
+      return;
+    } else {
+      this.velocity.y = 0;
     }
   }
 }

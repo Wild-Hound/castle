@@ -10,6 +10,8 @@ class Player {
       x: 0,
       y: 0,
     };
+    this.jumpVelocity = -20;
+    this.movementVelocity = 5;
     this.gravity = 1;
     this.width = 100;
     this.height = 100;
@@ -27,14 +29,41 @@ class Player {
   update() {
     const canvas = this.canvas;
 
+    this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+    this.sides.bottom = this.position.y + this.height;
 
     if (this.sides.bottom + this.velocity.y < canvas.height) {
       this.velocity.y += this.gravity;
-      this.sides.bottom = this.position.y + this.height;
+
       return;
     } else {
       this.velocity.y = 0;
     }
   }
 }
+
+window.addEventListener("keydown", (event) => {
+  switch (event.key) {
+    case "w":
+      if (player.velocity.y === 0) player.velocity.y = player.jumpVelocity;
+      break;
+    case "a":
+      keys.a.pressed = true;
+      break;
+    case "d":
+      keys.d.pressed = true;
+      break;
+  }
+});
+
+window.addEventListener("keyup", (event) => {
+  switch (event.key) {
+    case "a":
+      keys.a.pressed = false;
+      break;
+    case "d":
+      keys.d.pressed = false;
+      break;
+  }
+});

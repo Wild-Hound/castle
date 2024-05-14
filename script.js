@@ -10,8 +10,6 @@ const bglv1 = new Sprite(
   ctx
 );
 
-const player = new Player(canvas, ctx);
-
 const keys = {
   w: {
     pressed: false,
@@ -25,6 +23,7 @@ const keys = {
 };
 
 const collisionBlocks = createCollisionBlocks(lv1MapData, ctx);
+const player = new Player({ collisionBlocks }, canvas, ctx);
 
 const animate = () => {
   window.requestAnimationFrame(animate);

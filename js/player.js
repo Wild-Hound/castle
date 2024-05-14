@@ -11,7 +11,7 @@ class Player {
       y: 0,
     };
     this.jumpVelocity = -20;
-    this.movementVelocity = 5;
+    this.movementVelocity = 8;
     this.gravity = 1;
     this.width = 100;
     this.height = 100;

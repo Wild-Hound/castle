@@ -24,11 +24,16 @@ const keys = {
   },
 };
 
+const collisionBlocks = createCollisionBlocks(lv1MapData, ctx);
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   bglv1.draw();
+  collisionBlocks.forEach((block) => {
+    block.draw();
+  });
 
   player.velocity.x = 0;
   if (keys.d.pressed) player.velocity.x = player.movementVelocity;

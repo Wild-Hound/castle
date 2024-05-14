@@ -1,5 +1,7 @@
-class Player {
-  constructor({ collisionBlocks = [] }, canvas, ctx) {
+class Player extends Sprite {
+  constructor({ collisionBlocks = [], imgSrc, frameRate }, canvas, ctx) {
+    // console.log(imgSrc);
+    super({ imgSrc, frameRate });
     this.ctx = ctx;
     this.canvas = canvas;
     this.collisionBlocks = collisionBlocks;
@@ -14,17 +16,9 @@ class Player {
     this.jumpVelocity = -20;
     this.movementVelocity = 8;
     this.gravity = 1;
-    this.width = 25;
-    this.height = 25;
     this.sides = {
       bottom: this.position.y + this.height,
     };
-  }
-
-  draw() {
-    const ctx = this.ctx;
-    ctx.fillStyle = "red";
-    ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 
   update() {

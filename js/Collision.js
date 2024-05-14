@@ -8,7 +8,6 @@ class CollisionBlock {
 
   draw() {
     const ctx = this.ctx;
-    console.log("calling draw", ctx);
     ctx.fillStyle = "rgba(255, 0, 0, 0.5)";
     ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }

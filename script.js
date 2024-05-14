@@ -5,8 +5,7 @@ canvas.width = 64 * 16;
 canvas.height = 64 * 9;
 
 const bglv1 = new Sprite(
-  { position: { x: 0, y: 0 } },
-  "../img/backgroundLevel1.png",
+  { position: { x: 0, y: 0 }, imgSrc: "../img/backgroundLevel1.png" },
   ctx
 );
 
@@ -23,7 +22,11 @@ const keys = {
 };
 
 const collisionBlocks = createCollisionBlocks(lv1MapData, ctx);
-const player = new Player({ collisionBlocks }, canvas, ctx);
+const player = new Player(
+  { collisionBlocks, imgSrc: "./img/king/idle.png", frameRate: 11 },
+  canvas,
+  ctx
+);
 
 const animate = () => {
   window.requestAnimationFrame(animate);

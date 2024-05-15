@@ -1,7 +1,11 @@
 class Player extends Sprite {
-  constructor({ collisionBlocks = [], imgSrc, frameRate }, canvas, ctx) {
+  constructor(
+    { collisionBlocks = [], imgSrc, frameRate, animations },
+    canvas,
+    ctx
+  ) {
     // console.log(imgSrc);
-    super({ imgSrc, frameRate });
+    super({ imgSrc, frameRate, animations });
     this.ctx = ctx;
     this.canvas = canvas;
     this.collisionBlocks = collisionBlocks;
@@ -111,6 +115,16 @@ class Player extends Sprite {
         }
       }
     }
+  }
+
+  switchSprite(name) {
+    if (this.image === this.animations[name].image) return;
+    this.currentFrame = 0;
+    this.image = this.animations[name].image;
+    this.frameRate = this.animations[name].frameRate;
+    this.frameBuffer = this.animations[name].frameBuffer;
+    this.loop = this.animations[name].loop;
+    this.currentAnimation = this.animations[name];
   }
 }
 

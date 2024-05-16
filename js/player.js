@@ -1,11 +1,11 @@
 class Player extends Sprite {
   constructor(
-    { collisionBlocks = [], imgSrc, frameRate, animations },
+    { collisionBlocks = [], imgSrc, frameRate, animations, loop },
     canvas,
     ctx
   ) {
     // console.log(imgSrc);
-    super({ imgSrc, frameRate, animations });
+    super({ imgSrc, frameRate, animations, loop });
     this.ctx = ctx;
     this.canvas = canvas;
     this.collisionBlocks = collisionBlocks;
@@ -28,18 +28,40 @@ class Player extends Sprite {
   update() {
     const ctx = this.ctx;
     this.position.x += this.velocity.x;
-    this.updateHitBox();
+    this.updatehitBox();
 
     this.checkHorizontalCollision();
 
     this.applyGravity();
 
-    this.updateHitBox();
+    this.updatehitBox();
 
     this.checkVerticalCollision();
   }
 
-  updateHitBox() {
+  handleInput(keys) {
+    if (this.preventInput) {
+      return;
+    }
+
+    if (keys.d.pressed) {
+      this.switchSprite("runRight");
+      this.velocity.x = this.movementVelocity;
+      this.lastDirection = "right";
+    } else if (keys.a.pressed) {
+      this.switchSprite("runLeft");
+      this.velocity.x = -this.movementVelocity;
+      this.lastDirection = "left";
+    } else {
+      if (this.lastDirection === "left") {
+        this.switchSprite("idleLeft");
+      } else {
+        this.switchSprite("idleRight");
+      }
+    }
+  }
+
+  updatehitBox() {
     this.hitBox = {
       position: {
         x: this.position.x + 60,
@@ -131,6 +153,24 @@ class Player extends Sprite {
 window.addEventListener("keydown", (event) => {
   switch (event.key) {
     case "w":
+      for (let i = 0; i < doors.length; i++) {
+        const door = doors[i];
+
+        if (
+          player.hitBox.position.x + player.hitBox.width <=
+            door.position.x + door.width &&
+          player.hitBox.position.x >= door.position.x &&
+          player.hitBox.position.y + player.hitBox.height >= door.position.y &&
+          player.hitBox.position.y <= door.position.y + door.height
+        ) {
+          player.velocity.x = 0;
+          player.velocity.y = 0;
+          player.preventInput = true;
+          player.switchSprite("enterDoor");
+          door.play();
+          return;
+        }
+      }
       if (player.velocity.y === 0) player.velocity.y = player.jumpVelocity;
       break;
     case "a":

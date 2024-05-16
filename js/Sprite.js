@@ -1,5 +1,16 @@
 class Sprite {
-  constructor({ position, imgSrc, frameRate = 1, animations }, ctx) {
+  constructor(
+    {
+      position,
+      imgSrc,
+      frameRate = 1,
+      animations,
+      frameBuffer = 2,
+      loop = true,
+      autoplay = true,
+    },
+    ctx
+  ) {
     this.ctx = ctx;
     this.position = position;
     this.image = new Image();
@@ -8,8 +19,10 @@ class Sprite {
     this.frameRate = frameRate;
     this.currentFrame = 0;
     this.elapsedFrames = 0;
-    this.frameBuffer = 2;
+    this.frameBuffer = frameBuffer;
     this.animations = animations;
+    this.loop = loop;
+    this.autoplay = autoplay;
     this.image.onload = () => {
       this.loaded = true;
       this.width = this.image.width / frameRate;
@@ -54,12 +67,21 @@ class Sprite {
     this.updateFrames();
   }
 
+  play() {
+    this.autoplay = true;
+  }
+
   updateFrames() {
+    if (!this.autoplay) {
+      return;
+    }
     this.elapsedFrames++;
 
     if (this.elapsedFrames % this.frameBuffer === 0) {
       if (this.currentFrame < this.frameRate - 1) this.currentFrame++;
-      else this.currentFrame = 0;
+      else if (this.loop) {
+        this.currentFrame = 0;
+      }
     }
   }
 }

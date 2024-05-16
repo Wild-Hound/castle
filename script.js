@@ -52,37 +52,44 @@ const player = new Player(
         loop: true,
         imgSrc: "./img/king/runLeft.png",
       },
+      enterDoor: {
+        frameRate: 8,
+        frameBuffer: 4,
+        loop: false,
+        imgSrc: "./img/king/enterDoor.png",
+      },
     },
   },
   canvas,
   ctx
 );
 
+const doors = [
+  new Sprite(
+    {
+      position: { x: 767, y: 270 },
+      imgSrc: "./img/doorOpen.png",
+      frameRate: 5,
+      frameBuffer: 5,
+      loop: false,
+      autoplay: false,
+    },
+    ctx
+  ),
+];
+
 const animate = () => {
   window.requestAnimationFrame(animate);
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   bglv1.draw();
-  collisionBlocks.forEach((block) => {
-    block.draw();
+
+  doors.forEach((door) => {
+    door.draw();
   });
 
   player.velocity.x = 0;
-  if (keys.d.pressed) {
-    player.switchSprite("runRight");
-    player.velocity.x = player.movementVelocity;
-    player.lastDirection = "right";
-  } else if (keys.a.pressed) {
-    player.switchSprite("runLeft");
-    player.velocity.x = -player.movementVelocity;
-    player.lastDirection = "left";
-  } else {
-    if (player.lastDirection === "left") {
-      player.switchSprite("idleLeft");
-    } else {
-      player.switchSprite("idleRight");
-    }
-  }
+  player.handleInput(keys);
 
   // create player
   player.draw();

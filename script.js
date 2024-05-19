@@ -21,6 +21,10 @@ const keys = {
   },
 };
 
+const overlay = {
+  opacity: 0,
+};
+
 const collisionBlocks = createCollisionBlocks(lv1MapData, ctx);
 const player = new Player(
   {
@@ -57,6 +61,12 @@ const player = new Player(
         frameBuffer: 4,
         loop: false,
         imgSrc: "./img/king/enterDoor.png",
+        onComplete: () => {
+          console.log("completed");
+          gsap.to(overlay, {
+            opacity: 1,
+          });
+        },
       },
     },
   },
@@ -94,6 +104,12 @@ const animate = () => {
   // create player
   player.draw();
   player.update();
+
+  ctx.save();
+  ctx.globalAlpha = overlay?.opacity;
+  ctx.fillStyle = "black";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
 };
 
 animate();

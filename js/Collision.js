@@ -18,7 +18,7 @@ const createCollisionBlocks = (collisionData, ctx) => {
 
   collisionData.forEach((row, y) => {
     row.forEach((symbol, x) => {
-      if (symbol === 292) {
+      if (symbol === 292 || symbol === 250) {
         collisionBlocks.push(
           new CollisionBlock({ position: { x: x * 64, y: y * 64 } }, ctx)
         );

@@ -1,4 +1,4 @@
-const rawData = [
+const lv1rawData = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 292, 292, 292, 292, 292, 292, 292, 292, 292, 292, 292,
   292, 292, 292, 0, 0, 292, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 292, 0, 0, 292,
@@ -8,4 +8,4 @@ const rawData = [
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 ];
 
-const lv1MapData = rawData.parseMapData();
+const lv1MapData = lv1rawData.parseMapData();

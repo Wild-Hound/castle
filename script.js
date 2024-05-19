@@ -43,12 +43,17 @@ let player = new Player(
         loop: false,
         imgSrc: "./img/king/enterDoor.png",
         onComplete: () => {
-          console.log("completed");
           gsap.to(overlay, {
             opacity: 1,
             onComplete: () => {
-              level++;
+              if (level === 3) {
+                level = 1;
+              } else {
+                level++;
+              }
               levels[level].init();
+              player.switchSprite("idleRight");
+              player.preventInput = false;
               gsap.to(overlay, {
                 opacity: 0,
               });
@@ -89,6 +94,9 @@ let levels = {
       collisionBlocks = createCollisionBlocks(lv1MapData, ctx);
 
       player.collisionBlocks = player;
+      if (player.currentAnimation) {
+        player.currentAnimation.isActive = false;
+      }
 
       doors = [
         new Sprite(
@@ -118,6 +126,9 @@ let levels = {
       player.collisionBlocks = player;
       player.position.x = 96;
       player.position.y = 140;
+      if (player.currentAnimation) {
+        player.currentAnimation.isActive = false;
+      }
 
       doors = [
         new Sprite(
@@ -147,6 +158,9 @@ let levels = {
       player.collisionBlocks = player;
       player.position.x = 750;
       player.position.y = 230;
+      if (player.currentAnimation) {
+        player.currentAnimation.isActive = false;
+      }
 
       doors = [
         new Sprite(
